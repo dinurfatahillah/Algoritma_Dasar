@@ -1,0 +1,132 @@
+#include<iostream>
+#include<string>
+
+    const int jumlah = 5;
+    std::string nama[jumlah] = {};
+    int bahasa[jumlah] = {};
+    int mtk[jumlah] = {};
+    int pilih;
+    std::string cekNama;
+    float rerata = 0;
+
+//MENAMPILKAN SELURUH DATA MAHASISWA
+int printData(){
+   for (int i = 0; i < jumlah; i++){
+       if (!bahasa[i] || !mtk[i]){
+           std::cout << "[ Data Masih Kosong! ]" << std::endl;
+           std::cout << std::endl;
+           std::cout << "Pilih 9 Untuk Kembali :" << std::endl;
+           std::cin >> pilih;
+           return 0;
+       }
+       std::cout << "Nama : " << nama[i] << "\n";
+       std::cout << "Nilai Bahasa     : " << bahasa[i] << "\n";
+       std::cout << "Nilai Matematika : " << mtk[i] << "\n";
+       std::cout << std::endl;
+
+   }
+        std::cout << "Pilih 9 Untuk Kembali" << std::endl;
+        std::cin >> pilih;
+        return 0;
+}
+
+//EDIT SELURUH DATA MAHASISWA
+int editDataMhs(){
+   for (int i = 0; i < jumlah; i++){
+       std::cout << "Data Mahasiswa Ke-" << i + 1 << std::endl;
+       std::cout << "Nama : "; std::cin >> nama[i];
+       std::cout << "Nilai Bahasa : "; std::cin >> bahasa[i];
+       std::cout << "Nilai MTK    : "; std::cin >> mtk[i];
+       std::cout << std::endl;
+   }
+   std::cout << "Pilih 9 Untuk Kembali" << std::endl;
+   std::cin >> pilih;
+   return 0;
+}
+
+//EDIT BERDASARKAN NAMA
+int editBerdasarkanNama(){
+     std::cout << "Masukan Nama Mahasiswa : " << std::endl;
+     std::cin>>cekNama;
+     bool ditemukan = false;
+   for (int i = 0; i < jumlah; i++){
+         if (cekNama == nama[i]) {
+            std::cout << "Nama ; " << cekNama << std::endl;
+            std::cout << "Edit Nilai Bahasa : "; std::cin >> bahasa[i];
+            std::cout << "Edit Nilai Matematika : "; std::cin >> mtk[i];
+            std::cout << "\n" << "Data Berhasil Disimpan " << "\n";
+            std::cout << "Pilih 9 Untuk Kembali" << std::endl;
+            std::cin >> pilih;
+            return 0;
+         }
+       }
+       if(!ditemukan) {
+       std::cout << "Mahasiswa dengan nama " << cekNama << " tidak ditenukan" << std::endl << std::endl;
+       std::cout << "Pilih 9 untuk kembali" << std::endl;
+       std::cin >> pilih;
+       return 0;
+   }
+
+}
+
+//MENAMPILKAN NILAI RATA RATA
+int tampilkanRataRata(){
+    std::cout << "Masukan Nama Mahasiswa : "; std::cin>> cekNama;
+    bool ditemukan = false;
+    for (int i = 0; i < jumlah; i++) {
+    if (cekNama == nama[i] ) {
+       ditemukan = true;
+       std::cout << "Nama : " << cekNama << std::endl;
+       std::cout << "Nilai Bahasa     : " << bahasa[i] << std::endl;
+       std::cout << "Nilai Matematika :" << mtk[i] << std::endl;
+       rerata = (bahasa[i] + mtk[i]) /2.0;
+       std::cout << "Rata Rata Nilai  :" << rerata << std::endl;
+       std::cout << std::endl;
+       break;
+    }
+    }if (!ditemukan){
+    std::cout << std::endl;
+    std::cout << "Mahasiswa dengan nama " << cekNama << " tidak ditemukan" << std::endl;
+    std::cout<<"Pilih 9 Untuk Kembali" << std::endl;
+    std::cin >> pilih;
+    return 0;
+    }
+    std::cout << "Pilih 9 Untuk Kembali" << std::endl;
+    std::cin >> pilih;
+    return 0;
+}
+
+int main (){
+       std::cout << "#########################################" << std::endl;
+       std::cout << "=========APLIKASI DATA MAHASISWA=========" << std::endl;
+       std::cout << "#########################################"<<std::endl;
+       std::cout << std::endl;
+
+       do{
+           std::cout << "1) Tampilkan 5 Data Mahasiswa" << std::endl;
+           std::cout << "2) Edit Semua Data Mahasiswa" << std::endl;
+           std::cout << "3) Edit Nilai Mahasiswa  Berdasarkan Nama" << std::endl;
+           std::cout << "4) Tampilkan Rata Rata NIlai" << std::endl;
+           std::cout << "9) Exit" << std::endl;
+           std::cout << std::endl << std::endl;
+           std::cout << "Pilih Nomor : ";
+           std::cin >> pilih;
+
+           if (pilih == 1){
+               printData();
+           } else if (pilih == 2){
+               editDataMhs();
+           } else if (pilih == 3){
+               editBerdasarkanNama();
+           } else if (pilih == 4){
+               tampilkanRataRata();
+           } else if (pilih == 9){
+               std::cout << "ANDA KELUAR DARI APLIKASI";
+               return 0;
+           }
+       } while (pilih == 1 || pilih == 2 || pilih == 3 || pilih == 4 || pilih == 9);
+    if (pilih != 9){
+        std::cerr << "Tidak Ada Pilihan Dengan Nomor " << pilih << std::endl;
+    }
+    return 0;
+}
