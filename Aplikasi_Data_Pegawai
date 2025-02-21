@@ -1,0 +1,144 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+
+void tampilkanData() {
+    std::ifstream file("dataPegawai.txt");
+    std::string nama;
+    int gaji;
+
+    if (!file.is_open()) {
+        std::cerr << "Gagal membuka file!" << std::endl;
+        return;
+    }
+
+    std::cout << "Data Pegawai:" << std::endl;
+    while (file >> nama >> gaji) {
+        std::cout << "Nama : " << nama << ", Gaji : " << gaji << std::endl;
+    }
+
+    file.close();
+}
+
+void tambahkanData() {
+    std::ofstream file("dataPegawai.txt", std::ios_base::app);
+    std::string nama;
+    int gaji;
+
+    if (!file.is_open()) {
+        std::cerr << "Gagal membuka file!" << std::endl;
+        return;
+    }
+
+    std::cout << "Masukkan nama pegawai: ";
+    std::cin >> nama;
+    std::cout << "Masukkan gaji pegawai: ";
+    std::cin >> gaji;
+
+    file << nama << " " << gaji << std::endl;
+
+    file.close();
+}
+
+void editData() {
+    std::ifstream file("dataPegawai.txt");
+    std::string namaLama;
+    std::string namaBaru;
+    int gajiBaru;
+    std::string nama;
+    int gaji;
+
+    if (!file.is_open()) {
+        std::cerr << "Gagal membuka file!" << std::endl;
+        return;
+    }
+
+    std::cout << "Masukkan nama pegawai yang ingin diedit: ";
+    std::cin >> namaLama;
+
+    std::ofstream fileTemp("dataPegawaiTemp.txt");
+
+    while (file >> nama >> gaji) {
+        if (nama == namaLama) {
+            std::cout << "Masukkan nama baru: ";
+            std::cin >> namaBaru;
+            std::cout << "Masukkan gaji baru: ";
+            std::cin >> gajiBaru;
+            fileTemp << namaBaru << " " << gajiBaru << std::endl;
+        } else {
+            fileTemp << nama << " " << gaji << std::endl;
+        }
+    }
+
+    file.close();
+    fileTemp.close();
+
+    std::remove("dataPegawai.txt");
+    std::rename("dataPegawaiTemp.txt", "dataPegawai.txt");
+}
+
+void hapusData() {
+    std::ifstream file("dataPegawai.txt");
+    std::string namaHapus;
+    std::string nama;
+    int gaji;
+
+    if (!file.is_open()) {
+        std::cerr << "Gagal membuka file!" << std::endl;
+        return;
+    }
+
+    std::cout << "Masukkan nama pegawai yang ingin dihapus: ";
+    std::cin >> namaHapus;
+
+    std::ofstream fileTemp("dataPegawaiTemp.txt");
+
+    while (file >> nama >> gaji) {
+        if (nama != namaHapus) {
+            fileTemp << nama << " " << gaji << std::endl;
+        }
+    }
+
+    file.close();
+    fileTemp.close();
+
+    std::remove("dataPegawai.txt");
+    std::rename("dataPegawaiTemp.txt", "dataPegawai.txt");
+}
+
+int main() {
+    int pilihan;
+
+    do {
+        std::cout << "Menu:" << std::endl;
+        std::cout << "1. Tampilkan data pegawai" << std::endl;
+        std::cout << "2. Tambahkan data pegawai" << std::endl;
+        std::cout << "3. Edit data pegawai" << std::endl;
+        std::cout << "4. Hapus data pegawai" << std::endl;
+        std::cout << "5. Keluar" << std::endl;
+        std::cout << "Masukkan pilihan: ";
+        std::cin >> pilihan;
+
+        switch (pilihan) {
+            case 1:
+                tampilkanData();
+                break;
+            case 2:
+                tambahkanData();
+                break;
+            case 3:
+                editData();
+                break;
+            case 4:
+                hapusData();
+                break;
+            case 5:
+                std::cout << "Keluar..." << std::endl;
+                break;
+            default:
+                std::cout << "Pilihan tidak valid!" << std::endl;
+        }
+    } while (pilihan != 5);
+
+    return 0;
+}
